@@ -1,7 +1,7 @@
 {
     "name": "liuggio/statsd-client-bundle",
     "type": "symfony-bundle",
-    "description": "Provides a statsd client and simple ready-to-use support for #Symfony2 Application",
+    "description": "Provides a statsd client and simple ready-to-use support for #Symfony3 Application",
     "keywords": ["symfony", "statsd", "graphite", "monitor"],
     "license": "MIT",
     "authors": [
@@ -16,9 +16,9 @@
         }
     ],
     "require": {
-        "php": ">=5.3.2",
+        "php": ">=7.0",
         "liuggio/statsd-php-client": "~1.0.14",
-        "symfony/framework-bundle": ">2.0"
+        "symfony/framework-bundle": ">3.0"
     },
     "require-dev": {
         "doctrine/dbal": ">=2.2.0",
@@ -32,10 +32,5 @@
     "autoload": {
         "psr-0": { "Liuggio\\StatsDClientBundle": "" }
     },
-    "target-dir": "Liuggio/StatsDClientBundle",
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.6.x-dev"
-        }
-    }
+    "target-dir": "Liuggio/StatsDClientBundle"
 }
