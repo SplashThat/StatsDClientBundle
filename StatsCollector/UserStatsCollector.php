@@ -3,8 +3,14 @@
 namespace Liuggio\StatsDClientBundle\StatsCollector;
 
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
+
 class UserStatsCollector extends StatsCollector
 {
+    /** @var  AuthorizationChecker */
     private $authorization_checker;
 
     /**
@@ -19,13 +25,13 @@ class UserStatsCollector extends StatsCollector
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
 
-        if (null === $this->getSecurityContext()) {
+        if (null === $this->getSecurityAuthorizationChecker()) {
             return true;
         }
 
         $key = sprintf('%s.anonymous', $this->getStatsDataKey());
         try {
-            if ($this->getSecurityContext()->isGranted('IS_AUTHENTICATED_FULLY')) {
+            if ($this->getSecurityAuthorizationChecker()->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $key = sprintf('%s.logged', $this->getStatsDataKey());
             }
         } catch (AuthenticationCredentialsNotFoundException $exception) {
@@ -37,12 +43,12 @@ class UserStatsCollector extends StatsCollector
         return true;
     }
 
-    public function setSecurityAuthorizationChecker(Secu $authorization_checker)
+    public function setSecurityAuthorizationChecker(AuthorizationChecker $authorization_checker)
     {
         $this->authorization_checker = $authorization_checker;
     }
 
-    public function getSecurityContext()
+    public function getSecurityAuthorizationChecker()
     {
         return $this->authorization_checker;
     }
